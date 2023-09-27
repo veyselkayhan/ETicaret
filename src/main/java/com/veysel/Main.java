@@ -30,6 +30,7 @@ public class Main {
        musteri.setTelefonListesi(Arrays.asList("1234564789","8797987987"));
 
 
+
        ss.save(musteri);
        tt.commit();
        ss.close();

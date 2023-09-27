@@ -1,6 +1,10 @@
 package com.veysel.repository.entity;
 
 import com.veysel.enums.ECinsiyet;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -11,6 +15,10 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "tblmusteri")
+@Data//GET SET CONSTRUCTOR toStrıng için hepsi için
+@AllArgsConstructor // tüm alanlar için constructor
+@NoArgsConstructor // boş parametresiz constructor
+@Builder//builder pattern,bu ilgili sınıftan nesne yaratma için kullanılır.
 public class Musteri {
 
     @Id
@@ -134,91 +142,5 @@ public class Musteri {
     Her tabloda olmasi gerekli 3 alan bulunur bunlarin üzerinde duralim.
      */
 
-    public long getId() {
-        return id;
-    }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public Long getM_id() {
-        return m_id;
-    }
-
-    public void setM_id(Long m_id) {
-        this.m_id = m_id;
-    }
-
-    public UUID getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(UUID uuid) {
-        this.uuid = uuid;
-    }
-
-    public String getAd() {
-        return ad;
-    }
-
-    public void setAd(String ad) {
-        this.ad = ad;
-    }
-
-    public String getSoyad() {
-        return soyad;
-    }
-
-    public void setSoyad(String soyad) {
-        this.soyad = soyad;
-    }
-
-    public String getAdsoyad() {
-        return adsoyad;
-    }
-
-    public void setAdsoyad(String adsoyad) {
-        this.adsoyad = adsoyad;
-    }
-
-    public String getAdres() {
-        return adres;
-    }
-
-    public void setAdres(String adres) {
-        this.adres = adres;
-    }
-
-    public Date getDogumTarihi() {
-        return dogumTarihi;
-    }
-
-    public void setDogumTarihi(Date dogumTarihi) {
-        this.dogumTarihi = dogumTarihi;
-    }
-
-    public Date getKayitTarihi() {
-        return kayitTarihi;
-    }
-
-    public void setKayitTarihi(Timestamp kayitTarihi) {
-        this.kayitTarihi = kayitTarihi;
-    }
-
-    public Long getCreateAt() {
-        return createAt;
-    }
-
-    public void setCreateAt(Long createAt) {
-        this.createAt = createAt;
-    }
-
-    public List<String> getTelefonListesi() {
-        return telefonListesi;
-    }
-
-    public void setTelefonListesi(List<String> telefonListesi) {
-        this.telefonListesi = telefonListesi;
-    }
 }
