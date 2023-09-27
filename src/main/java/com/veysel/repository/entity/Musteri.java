@@ -1,10 +1,12 @@
 package com.veysel.repository.entity;
 
+import com.veysel.enums.ECinsiyet;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -94,7 +96,7 @@ public class Musteri {
     Date dogumTarihi;
 
     @Temporal(TemporalType.TIMESTAMP)
-    Timestamp kayitTarihi;
+    Date kayitTarihi;
 
     /*
     DIKKAT!!!!!!!!!!!
@@ -103,17 +105,120 @@ public class Musteri {
     Zamanı ms cinsinden tutarız.
      */
     Long createAt;
-    String telefon;
     /*
-    Cinsiyet Bilgisi enum olsun
+    Bir kullanıcıya ait birden fazla telefon numarası olabilir.Bu nedenle burada tek bir değer
+    almak yerine bir liste talep edebiliriz.Bu liste islemi ORM aracı icin özel bir tanımdır.Bu nedenle
+    özel olarak işaretlenmelidir.
+    NOT:Eğer entity içinde bir collection tanımlayacaksanız mutlaka @ElementCollection anatasyonu eklemelisiniz.
      */
 
+    @ElementCollection
+    List<String>telefonListesi;
+
     /*
+    Cinsiyet Bilgisi enum olsun
+    Enum->Degeri int-> görünen kısım String
+     */
+
+    @Enumerated(EnumType.STRING)
+    ECinsiyet cinsiyet;
+
+    public ECinsiyet getCinsiyet() {
+        return cinsiyet;
+    }
+
+    public void setCinsiyet(ECinsiyet cinsiyet) {
+        this.cinsiyet = cinsiyet;
+    }
+/*
     Her tabloda olmasi gerekli 3 alan bulunur bunlarin üzerinde duralim.
      */
 
+    public long getId() {
+        return id;
+    }
 
+    public void setId(long id) {
+        this.id = id;
+    }
 
+    public Long getM_id() {
+        return m_id;
+    }
 
+    public void setM_id(Long m_id) {
+        this.m_id = m_id;
+    }
 
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
+    }
+
+    public String getAd() {
+        return ad;
+    }
+
+    public void setAd(String ad) {
+        this.ad = ad;
+    }
+
+    public String getSoyad() {
+        return soyad;
+    }
+
+    public void setSoyad(String soyad) {
+        this.soyad = soyad;
+    }
+
+    public String getAdsoyad() {
+        return adsoyad;
+    }
+
+    public void setAdsoyad(String adsoyad) {
+        this.adsoyad = adsoyad;
+    }
+
+    public String getAdres() {
+        return adres;
+    }
+
+    public void setAdres(String adres) {
+        this.adres = adres;
+    }
+
+    public Date getDogumTarihi() {
+        return dogumTarihi;
+    }
+
+    public void setDogumTarihi(Date dogumTarihi) {
+        this.dogumTarihi = dogumTarihi;
+    }
+
+    public Date getKayitTarihi() {
+        return kayitTarihi;
+    }
+
+    public void setKayitTarihi(Timestamp kayitTarihi) {
+        this.kayitTarihi = kayitTarihi;
+    }
+
+    public Long getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(Long createAt) {
+        this.createAt = createAt;
+    }
+
+    public List<String> getTelefonListesi() {
+        return telefonListesi;
+    }
+
+    public void setTelefonListesi(List<String> telefonListesi) {
+        this.telefonListesi = telefonListesi;
+    }
 }
