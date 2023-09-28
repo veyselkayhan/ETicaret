@@ -1,15 +1,13 @@
 package com.veysel;
 
 import com.veysel.enums.ECinsiyet;
-import com.veysel.repository.entity.BaseEntity;
-import com.veysel.repository.entity.Iletisim;
-import com.veysel.repository.entity.Musteri;
-import com.veysel.repository.entity.Satis;
+import com.veysel.repository.entity.*;
 import com.veysel.util.HibernateUtility;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.Date;
@@ -19,39 +17,93 @@ public class Main {
 
         Session ss=HibernateUtility.getSessionFactory().openSession();
         Transaction tt=ss.beginTransaction();
-//
-//
-//        Satis satis=Satis.builder().musteriid(2L).id(1L).build();
 
         BaseEntity baseEntity= BaseEntity.builder()
-                .state(1)
-                .createAt(System.currentTimeMillis())
-                .updateAt(System.currentTimeMillis())
                 .isActive(true)
-                .build();
-        Iletisim iletisim=Iletisim.builder()
-                .adres("Ankara")
-                .cepTelefonu("5378470633")
-                .email("v@gmail.com")
+                .state(1)
+                .updateAt(System.currentTimeMillis())
+                .createAt(System.currentTimeMillis())
                 .build();
 
+        Urun urunSeker= Urun.builder()
+                .ad("Şeker")
+                .fiyat(BigDecimal.valueOf(20))
+                .stok(100)
+                .baseEntity(baseEntity)
+                .build();
 
-       Musteri musteri= new Musteri();
-       musteri.setAd("Muhammet");
-       musteri.setSoyad("Karakaya");
-       musteri.setAdsoyad(musteri.getAd()+" "+musteri.getSoyad());
-       musteri.setBaseEntity(baseEntity);
-       musteri.setIletisim(iletisim);
-//       musteri.setAdres("İstanbul");
-       musteri.setDogumTarihi(new Date());
-       musteri.setKayitTarihi(new Timestamp(System.currentTimeMillis()));
-       musteri.setCinsiyet(ECinsiyet.ERKEK);
-//       musteri.setCreateAt(System.currentTimeMillis());
-       musteri.setTelefonListesi(Arrays.asList("1234564789","8797987987"));
+        Urun urunYag=Urun.builder()
+                .ad("Yağ")
+                .fiyat(BigDecimal.valueOf(200))
+                .baseEntity(baseEntity)
+                .build();
+        ss.save(urunSeker);
+        ss.save(urunYag);
+
+        Satis satis= Satis.builder()
+                .musteriid(1L)
+                .date(System.currentTimeMillis())
+                .baseEntity(baseEntity)
+                .toplamTutar(BigDecimal.valueOf(500))
+                .build();
+
+        ss.save(satis);
+
+        SatisDetay satisDetaySeker= SatisDetay.builder()
+                .urunId(1L)
+                .fiyat(BigDecimal.valueOf(20))
+                .adet(5)
+                .toplamFiyat(BigDecimal.valueOf(100))
+                .baseEntity(baseEntity)
+                .satisId(1L)
+                .build();
+
+        SatisDetay satisDetayYag= SatisDetay.builder()
+                .urunId(2L)
+                .fiyat(BigDecimal.valueOf(200))
+                .adet(2)
+                .toplamFiyat(BigDecimal.valueOf(200))
+                .baseEntity(baseEntity)
+                .satisId(1L)
+                .build();
+
+
+        ss.save(satisDetaySeker);
+        ss.save(satisDetayYag);
 
 
 
-       ss.save(musteri);
+
+//        Satis satis=Satis.builder().musteriid(2L).id(1L).build();
+//
+//        BaseEntity baseEntity= BaseEntity.builder()
+//                .state(1)
+//                .createAt(System.currentTimeMillis())
+//                .updateAt(System.currentTimeMillis())
+//                .isActive(true)
+//                .build();
+//        Iletisim iletisim=Iletisim.builder()
+//                .adres("Ankara")
+//                .cepTelefonu("5378470633")
+//                .email("v@gmail.com")
+//                .build();
+//
+//
+//       Musteri musteri= new Musteri();
+//       musteri.setAd("Muhammet");
+//       musteri.setSoyad("Karakaya");
+//       musteri.setAdsoyad(musteri.getAd()+" "+musteri.getSoyad());
+//       musteri.setBaseEntity(baseEntity);
+//       musteri.setIletisim(iletisim);
+////       musteri.setAdres("İstanbul");
+//       musteri.setDogumTarihi(new Date());
+//       musteri.setKayitTarihi(new Timestamp(System.currentTimeMillis()));
+//       musteri.setCinsiyet(ECinsiyet.ERKEK);
+////       musteri.setCreateAt(System.currentTimeMillis());
+//       musteri.setTelefonListesi(Arrays.asList("1234564789","8797987987"));
+//       ss.save(musteri);
+
+
        tt.commit();
        ss.close();
     }
