@@ -89,8 +89,6 @@ public class Musteri {
     Adres bilgisini detaylandıralım.
      */
 
-    @Column(length = 500)
-    String adres;
 
     /*
     Zaman tanımlamaları özel tanımlanan alanlardır.
@@ -112,7 +110,7 @@ public class Musteri {
     Long time , date vs...
     Zamanı ms cinsinden tutarız.
      */
-    Long createAt;
+
     /*
     Bir kullanıcıya ait birden fazla telefon numarası olabilir.Bu nedenle burada tek bir değer
     almak yerine bir liste talep edebiliriz.Bu liste islemi ORM aracı icin özel bir tanımdır.Bu nedenle
@@ -141,6 +139,20 @@ public class Musteri {
 /*
     Her tabloda olmasi gerekli 3 alan bulunur bunlarin üzerinde duralim.
      */
+
+
+
+    @Embedded
+    BaseEntity baseEntity;
+
+
+    /*
+    DİKKAT!!!!!
+    Embed ile eklediğimiz alanların entity olmamasına dikkat edin.Cünkü
+    zaten tanımladığımız alanların tekrardan tanımlanması hata olusmasına neden olacaktır.
+     */
+    @Embedded
+    Iletisim iletisim;
 
 
 }
