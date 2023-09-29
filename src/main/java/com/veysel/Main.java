@@ -1,41 +1,55 @@
 package com.veysel;
 
+import com.veysel.criteriaornekleri.CriteriaOrnekleri;
 import com.veysel.enums.ECinsiyet;
+import com.veysel.repository.MusteriRepository;
 import com.veysel.repository.UrunRepository;
 import com.veysel.repository.entity.*;
 import com.veysel.util.HibernateUtility;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.Date;
 
 public class Main {
+
     public static void main(String[] args) {
 //
 //        Session ss=HibernateUtility.getSessionFactory().openSession();
 //        Transaction tt=ss.beginTransaction();
 //
-        BaseEntity baseEntity= BaseEntity.builder()
-                .isActive(true)
-                .state(1)
-                .updateAt(System.currentTimeMillis())
-                .createAt(System.currentTimeMillis())
-                .build();
+//        BaseEntity baseEntity= BaseEntity.builder()
+//                .isActive(true)
+//                .state(1)
+//                .updateAt(System.currentTimeMillis())
+//                .createAt(System.currentTimeMillis())
+//                .build();
+//
+//        UrunRepository urunRepository=new UrunRepository();
+//        urunRepository.save(Urun.builder()
+//                        .baseEntity(baseEntity)
+//                        .ad("Bilgisayar")
+//                        .stok(300)
+//                        .fiyat(BigDecimal.valueOf(2_300))
+//                        .barkod("4245746546")
+//                        .marka("Asus")
+//                        .model("X550v")
+//                .build());
+//
+//        MusteriRepository musteriRepository=new MusteriRepository();
 
-        UrunRepository urunRepository=new UrunRepository();
-        urunRepository.save(Urun.builder()
-                        .baseEntity(baseEntity)
-                        .ad("Bilgisayar")
-                        .stok(300)
-                        .fiyat(BigDecimal.valueOf(2_300))
-                        .barkod("4245746546")
-                        .marka("Asus")
-                        .model("X550v")
-                .build());
+//        musteriRepository.save(Musteri.builder().build());
+
+
 //
 //        Urun urunSeker= Urun.builder()
 //                .ad("Şeker")
@@ -115,6 +129,11 @@ public class Main {
 ////       musteri.setCreateAt(System.currentTimeMillis());
 //       musteri.setTelefonListesi(Arrays.asList("1234564789","8797987987"));
 //       ss.save(musteri);
+
+
+//        new CriteriaOrnekleri().findAll();
+
+        new CriteriaOrnekleri().selectOneColumn();
 
 
 
