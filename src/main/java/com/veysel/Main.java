@@ -19,6 +19,7 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 public class Main {
 
@@ -130,10 +131,31 @@ public class Main {
 //       musteri.setTelefonListesi(Arrays.asList("1234564789","8797987987"));
 //       ss.save(musteri);
 
-
+//
 //        new CriteriaOrnekleri().findAll();
+//
+//        new CriteriaOrnekleri().selectOneColumn();
+//
+//        new CriteriaOrnekleri().selectOneColumnById(7L);
 
-        new CriteriaOrnekleri().selectOneColumn();
+//        new CriteriaOrnekleri().findById(7L);
+
+        /*
+        int dizi ={12,12,12,12,1}
+        String[] ifadeler = {"dfsdsa","sadasd","asdaskl"}
+        object[] objeler={1,"aslşkd","12.1"}
+         */
+        List<Object[]>result=new CriteriaOrnekleri().selectManyColumn();
+        result.forEach(x->{
+            System.out.println("id "+x[0]);//object []{1,Şeler,20}
+            System.out.println("id "+x[1]);
+            System.out.println("fiyat "+(Double.parseDouble(x[2].toString())*3));
+
+        });
+
+        new CriteriaOrnekleri()
+                .findAllByNameLikeAndFiyatGre("%a%",BigDecimal.valueOf(600))
+                .forEach(System.out::println);
 
 
 
