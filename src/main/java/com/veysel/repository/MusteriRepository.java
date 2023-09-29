@@ -9,7 +9,7 @@ import org.hibernate.Transaction;
 
 import java.util.List;
 
-public class MusteriRepository extends MyFactoryRepository<Musteri> {
+public class MusteriRepository extends MyFactoryRepository<Musteri,Long> {
 
 
 }

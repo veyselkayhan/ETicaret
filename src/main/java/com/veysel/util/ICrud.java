@@ -1,17 +1,33 @@
 package com.veysel.util;
 
 import java.util.List;
+import java.util.Optional;
 
-public interface ICrud <T>{
-    void save(T entity);
+public interface ICrud <T,ID>{
 
-    void update(T entity);
+    T save(T entity);
+    // bir entity i kaydedince onu dönmek en doğrusu olur.
 
-    void delete(long id);
+    Iterable saveAll(Iterable <T> entites);
+    //verdiğim müşteri or urun vb entityi kaydet bana onu geri dön
 
-    List<T> findAll();
+    void delete(T entity);
 
-    T findById(long id);
+    void deleteById(ID id);
+
+    Optional<T>findById(ID id);
+
+    boolean existById(ID id);
+
+    List<T>findAll();
+    List<T>findByEntity(T entity);
+
+    List<T>findByColumnNameAndValue(String columnName,String value);
+ 
+
+
+
+
 
 
 }

@@ -1,11 +1,13 @@
 package com.veysel.util;
 
+import com.sun.xml.bind.v2.model.core.ID;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import java.util.List;
+import java.util.Optional;
 
-public class MyFactoryRepository <T> implements ICrud <T>{
+public class MyFactoryRepository <T,ID> implements ICrud <T, ID>{
 
 
     private Session session;
@@ -24,23 +26,35 @@ public class MyFactoryRepository <T> implements ICrud <T>{
         session.close();
     }
 
+
     @Override
-    public void save(T entity) {
-        openSession();
-        session.save(entity);
-        closeSession();
+    public T save(T entity) {
+        return null;
     }
 
     @Override
-    public void update(T entity) {
-    openSession();
-    session.update(entity);
-    closeSession();
+    public Iterable saveAll(Iterable<T> entites) {
+        return null;
     }
 
     @Override
-    public void delete(long id) {
+    public void delete(T entity) {
 
+    }
+
+    @Override
+    public void deleteById(ID id) {
+
+    }
+
+    @Override
+    public Optional<T> findById(ID id) {
+        return Optional.empty();
+    }
+
+    @Override
+    public boolean existById(ID id) {
+        return false;
     }
 
     @Override
@@ -49,7 +63,12 @@ public class MyFactoryRepository <T> implements ICrud <T>{
     }
 
     @Override
-    public T findById(long id) {
+    public List<T> findByEntity(T entity) {
+        return null;
+    }
+
+    @Override
+    public List<T> findByColumnNameAndValue(String columnName, String value) {
         return null;
     }
 }
