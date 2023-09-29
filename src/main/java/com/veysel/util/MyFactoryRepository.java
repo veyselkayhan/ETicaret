@@ -1,9 +1,14 @@
 package com.veysel.util;
 
 import com.sun.xml.bind.v2.model.core.ID;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,7 +19,18 @@ public class MyFactoryRepository <T,ID> implements ICrud <T, ID>{
 
     private Transaction transaction;
 
+    private CriteriaBuilder criteriaBuilder;
 
+    private EntityManager entityManager;
+
+    T t;
+
+
+    public MyFactoryRepository(T entity) {
+        entityManager=HibernateUtility.getSessionFactory().createEntityManager();
+        criteriaBuilder=entityManager.getCriteriaBuilder();
+        this.t=entity;
+    }
 
     private void openSession(){
         session= HibernateUtility.getSessionFactory().openSession();
@@ -29,21 +45,39 @@ public class MyFactoryRepository <T,ID> implements ICrud <T, ID>{
 
     @Override
     public T save(T entity) {
-        return null;
+        openSession();
+        session.save(entity);
+        closeSession();
+        return entity;
     }
 
     @Override
     public Iterable saveAll(Iterable<T> entites) {
-        return null;
+        openSession();
+        entites.forEach(t->{
+            session.save(t);
+        });
+        closeSession();
+        return entites;
     }
 
     @Override
     public void delete(T entity) {
+        openSession();
+        session.delete(entity);
+        closeSession();
 
     }
 
     @Override
     public void deleteById(ID id) {
+        CriteriaQuery<T>criteria=(CriteriaQuery<T>) criteriaBuilder.createQuery(t.getClass());
+        Root<T>root=(Root<T>) criteria.from(t.getClass());
+        criteria.select(root);
+        criteria.where(criteriaBuilder.equal(root.get("id"),id));
+        T result=entityManager.createQuery(criteria).getSingleResult();
+        session.delete(result);
+        closeSession();
 
     }
 

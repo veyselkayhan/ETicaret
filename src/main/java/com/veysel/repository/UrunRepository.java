@@ -9,7 +9,9 @@ import org.hibernate.Transaction;
 
 import java.util.List;
 
-public class UrunRepository extends MyFactoryRepository <Urun> {
+public class UrunRepository extends MyFactoryRepository <Urun,Long> {
 
-
+    public UrunRepository() {
+        super(new Urun());
+    }
 }

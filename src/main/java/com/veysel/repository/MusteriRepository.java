@@ -11,5 +11,7 @@ import java.util.List;
 
 public class MusteriRepository extends MyFactoryRepository<Musteri,Long> {
 
-
+    public MusteriRepository() {
+        super(new Musteri());
+    }
 }
