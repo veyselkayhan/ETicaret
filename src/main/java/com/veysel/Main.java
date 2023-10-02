@@ -6,6 +6,7 @@ import com.veysel.repository.MusteriRepository;
 import com.veysel.repository.UrunRepository;
 import com.veysel.repository.entity.*;
 import com.veysel.util.HibernateUtility;
+import com.veysel.util.MyFactoryRepository;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,6 +16,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import javax.persistence.*;
+import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Arrays;
@@ -99,9 +101,6 @@ public class Main {
 //        ss.save(satisDetayYag);
 
 
-
-
-
 //        Satis satis=Satis.builder().musteriid(2L).id(1L).build();
 //
 //        BaseEntity baseEntity= BaseEntity.builder()
@@ -145,20 +144,37 @@ public class Main {
         String[] ifadeler = {"dfsdsa","sadasd","asdaskl"}
         object[] objeler={1,"aslşkd","12.1"}
          */
-        List<Object[]>result=new CriteriaOrnekleri().selectManyColumn();
-        result.forEach(x->{
-            System.out.println("id "+x[0]);//object []{1,Şeler,20}
-            System.out.println("id "+x[1]);
-            System.out.println("fiyat "+(Double.parseDouble(x[2].toString())*3));
+//        List<Object[]>result=new CriteriaOrnekleri().selectManyColumn();
+//        result.forEach(x->{
+//            System.out.println("id "+x[0]);//object []{1,Şeler,20}
+//            System.out.println("id "+x[1]);
+//            System.out.println("fiyat "+(Double.parseDouble(x[2].toString())*3));
+//
+//        });
+//
+//        new CriteriaOrnekleri()
+//                .findAllByNameLikeAndFiyatGre("%a%",BigDecimal.valueOf(600))
+//                .forEach(System.out::println);
+//
+//
+        Musteri musteri = new Musteri();
+        musteri.setAd("Muhammet");
+        musteri.setCinsiyet(ECinsiyet.ERKEK);
+        musteri.setSoyad("Hoca");
 
-        });
+        //bu sınıfın içindeki alan adları - değişken adlarını kod ile okumamız gerekli ve null almayanlarının temsil edilecek
+        //değerlerini ekrana yazdırmanız gereklidir.
+        //Orn ad-> Muhammet
 
-        new CriteriaOrnekleri()
-                .findAllByNameLikeAndFiyatGre("%a%",BigDecimal.valueOf(600))
-                .forEach(System.out::println);
+//        MusteriRepository musteriRepository = new MusteriRepository();
 
+//        musteriRepository.findAll().forEach(System.out::println);
 
+        CriteriaOrnekleri cr= new CriteriaOrnekleri();
+//        cr.findAllNativeQuery().forEach(System.out::println);
+        cr.findAllByAd("%i%").forEach(System.out::println);
 
+        System.out.println("Toplam fiyat : "+cr.getTotalPrice());
 
     }
 }

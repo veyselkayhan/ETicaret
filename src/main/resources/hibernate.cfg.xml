@@ -32,6 +32,8 @@
         <mapping class="com.veysel.repository.entity.SatisDetay"></mapping>
         <mapping class="com.veysel.repository.entity.Sepet"></mapping>
         <mapping class="com.veysel.repository.entity.Urun"></mapping>
+        <mapping class="com.veysel.repository.views.VwUrun"></mapping>
+
 
 
 

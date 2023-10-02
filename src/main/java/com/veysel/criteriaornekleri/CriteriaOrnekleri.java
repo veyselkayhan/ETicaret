@@ -2,9 +2,11 @@ package com.veysel.criteriaornekleri;
 
 import com.veysel.repository.entity.Musteri;
 import com.veysel.repository.entity.Urun;
+import com.veysel.repository.views.VwUrun;
 import com.veysel.util.HibernateUtility;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
 import java.math.BigDecimal;
 import java.util.List;
@@ -144,6 +146,51 @@ public class CriteriaOrnekleri {
         criteria.where(criteriaBuilder.and(s1,s2));
         List<Urun>result=entityManager.createQuery(criteria).getResultList();
         return result;
+    }
+
+       /*
+    Java Persistence Api-> JPA Eski
+    Jakarta Persistence Api ->JPA Yeni
+    NativeQuery -> SQl komutlari üzerinden JPA ile sorgulama yapmak.
+     */
+
+    public List<Urun>findAllNativeQuery(){
+        /*
+        Eğer özellikle belirtmez ise dönülen değer Object[] olur..
+         */
+      List uruns = entityManager.createNativeQuery("SELECT * FROM tbl_urun",Urun.class).getResultList();
+      return uruns;
+    }
+
+    /*
+    create view vwurun as
+    Select id,ad m.ad from tbl_urun or
+    Left joın tblmusteri as m on m.id=ur.musteri_id
+    Views
+    procedure
+     */
+    public List<?> findAllNameNativeQuery(){
+        List<VwUrun> result=entityManager.createNativeQuery("select id,ad,fiyat from tbl_urun",VwUrun.class).getResultList();
+    return result;
+    }
+
+    public List<Urun>findAllNamedQuery(){
+//        TypedQuery<Urun> namedQuery = entityManager.createNamedQuery("Urun.findAll",Urun.class);
+//        return namedQuery.getResultList();
+
+        return entityManager.createNamedQuery("Urun.findAll",Urun.class).getResultList();
+
+    }
+
+    public List<Urun> findAllByAd(String urunadi){
+       TypedQuery<Urun>namedQuery=entityManager.createNamedQuery("Urun.findByAd",Urun.class);
+       namedQuery.setParameter("urunadi",urunadi);
+       return namedQuery.getResultList();
+    }
+
+    public BigDecimal getTotalPrice(){
+        TypedQuery<BigDecimal> namedQuery = entityManager.createNamedQuery("Urun.getTotalPrice",BigDecimal.class);
+        return namedQuery.getSingleResult();
     }
 
 }
